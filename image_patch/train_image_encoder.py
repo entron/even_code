@@ -19,7 +19,7 @@ cg = Config()
 input_dim = cg.input_channel * cg.input_height * cg.input_width
 
 
-net = util.SparseEvenPartitionNet(config=cg)
+net = util.EvenCodeNet(config=cg)
 if cg.compile:
     net = torch.compile(net)
 net.to(cg.device)

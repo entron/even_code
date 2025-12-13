@@ -16,7 +16,7 @@ random_affine: False
 
 # Model
 layers:
-  - type: ParallelSparseConv2d  # 1st layer IPU
+  - type: ParallelMLPConv2d  # 1st layer IPU
     requires_grad: True
     pretrained: False
     # pretrained: /home/user/jobs/A303_attract_mnist6x6/checkpoint_epoch_0.pt
@@ -26,7 +26,7 @@ layers:
     out_channels: 96
     kernel_size: [5, 5]
     stride: [1, 1]
-  # - type: ParallelSparseConv2d  # 2nd layer IPU
+  # - type: ParallelMLPConv2d  # 2nd layer IPU
   #   requires_grad: True
   #   pretrained: False
   #   layer_sizes: [30]
@@ -35,7 +35,7 @@ layers:
   #   out_channels: 128
   #   kernel_size: [4, 4]
   #   stride: [1, 1]
-  # - type: ParallelSparseConv2d  # 3rd layer IPU
+  # - type: ParallelMLPConv2d  # 3rd layer IPU
   #   requires_grad: True
   #   pretrained: False
   #   layer_sizes: []

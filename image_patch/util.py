@@ -185,7 +185,7 @@ class ParallelMLP(nn.Module):
         return output
 
 
-class SparseConv2d(nn.Module):
+class MLPConv2d(nn.Module):
     """Layer to create sparse representation with input and output like conv2d
     funapp: function approximation layer. (e.g. MLP network)
     """
@@ -199,7 +199,7 @@ class SparseConv2d(nn.Module):
         stride=None,
         layer_bias=None,
     ):
-        super(SparseConv2d, self).__init__()
+        super(MLPConv2d, self).__init__()
         self.funapp = MLP(
             input_dim=in_channels * np.prod(kernel_size),
             output_dim=out_channels,
@@ -226,8 +226,8 @@ class SparseConv2d(nn.Module):
         return out
 
 
-class IndependentSparseConv2d(nn.Module):
-    """Similary to SparseConv2d except each node has dedicated MLP."""
+class IndependentMLPConv2d(nn.Module):
+    """Similary to MLPConv2d except each node has dedicated MLP."""
 
     def __init__(
         self,
@@ -239,7 +239,7 @@ class IndependentSparseConv2d(nn.Module):
         layer_sizes=None,
         layer_bias=None,
     ):
-        super(IndependentSparseConv2d, self).__init__()
+        super(IndependentMLPConv2d, self).__init__()
         if funapp is not None and layer_sizes is not None:
             raise TypeError("Pass only one of 'funapp' or 'layer_sizes'.")
 
@@ -283,9 +283,9 @@ class IndependentSparseConv2d(nn.Module):
         return out
 
 
-class ParallelSparseConv2d(nn.Module):
+class ParallelMLPConv2d(nn.Module):
     """
-    Similar to IndependentSparseConv2d except Parallelized.
+    Similar to IndependentMLPConv2d except Parallelized and 10x faster.
     """
 
     def __init__(
@@ -297,7 +297,7 @@ class ParallelSparseConv2d(nn.Module):
         kernel_size,
         stride=None,
     ):
-        super(ParallelSparseConv2d, self).__init__()
+        super(ParallelMLPConv2d, self).__init__()
         if isinstance(layer_sizes, list):
             self.funapp = ParallelMLP(
                 input_dim=in_channels * np.prod(kernel_size),
@@ -340,18 +340,18 @@ class Round(nn.Module):
         return torch.round(x)
 
 
-class SparseEvenPartitionNet(nn.Module):
+class EvenCodeNet(nn.Module):
     def __init__(self, config):
-        super(SparseEvenPartitionNet, self).__init__()
+        super(EvenCodeNet, self).__init__()
         self.layers = nn.ModuleList()
         for layer_cg in config.layers:
             layer_type = layer_cg.pop("type")
             requires_grad = layer_cg.pop("requires_grad")
             pretrained = layer_cg.pop("pretrained")
             if layer_type in [
-                "ParallelSparseConv2d",
-                "IndependentSparseConv2d",
-                "SparseConv2d",
+                "ParallelMLPConv2d",
+                "IndependentMLPConv2d",
+                "MLPConv2d",
             ]:
                 # Search for the layer class in both torch.nn and custom modules
                 LayerClass = getattr(nn, layer_type, None) or globals().get(layer_type)

@@ -17,7 +17,7 @@ import matplotlib.pyplot as plt
 
 cg = Config()
 cg.layers[0]['stride'] = [2, 2]  # reduce GPU RAM usage when calling plot_pca_feature_map()
-net = util.SparseEvenPartitionNet(config=cg)
+net = util.EvenCodeNet(config=cg)
 # if cg.compile:
 #     net = torch.compile(net)
 net.to(cg.device)
