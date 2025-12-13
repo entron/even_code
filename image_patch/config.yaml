@@ -1,0 +1,64 @@
+device: cuda:0  # use cpu if do not have GPU. As the model is small cpu's speed is comparable.
+compile: False  # for newer pytorch and small model uncompiled is as fast.
+init_from_epoch: False  # False or 1, 2, 3 ... resume training from x-th epoch
+
+# Input
+input_channel: 3
+input_height: 5
+input_width: 5
+patches_per_file: 100
+#image_path:  /nvme/IMAGES/IMAGENET/ 
+image_path: /nvme/IMAGES/COCO/unlabeled2017/
+num_image: -1  
+as_gray: False
+random_affine: False
+
+
+# Model
+layers:
+  - type: ParallelSparseConv2d  # 1st layer IPU
+    requires_grad: True
+    pretrained: False
+    # pretrained: /home/user/jobs/A303_attract_mnist6x6/checkpoint_epoch_0.pt
+    layer_sizes: [48]
+    layer_bias: True
+    in_channels: 3
+    out_channels: 96
+    kernel_size: [5, 5]
+    stride: [1, 1]
+  # - type: ParallelSparseConv2d  # 2nd layer IPU
+  #   requires_grad: True
+  #   pretrained: False
+  #   layer_sizes: [30]
+  #   layer_bias: True
+  #   in_channels: 64
+  #   out_channels: 128
+  #   kernel_size: [4, 4]
+  #   stride: [1, 1]
+  # - type: ParallelSparseConv2d  # 3rd layer IPU
+  #   requires_grad: True
+  #   pretrained: False
+  #   layer_sizes: []
+  #   layer_bias: True
+  #   in_channels: 128
+  #   out_channels: 256
+  #   kernel_size: [3, 3]
+  #   stride: [1, 1]
+
+# Training
+sparsity_weight: 6
+optimizer: AdamW
+lr: 2e-4
+min_lr: 5e-5
+batch_size: 500
+in_batch_shuffle: True
+nodewise: True
+mini_batch_size: 100
+n_epoch: 5
+num_workers: 4
+iteration_checkpoint_interval: 1000
+
+
+
+# Outputs
+fname_checkpoint: checkpoint_epoch_{epoch}.pt

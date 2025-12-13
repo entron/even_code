@@ -1,0 +1,7 @@
+__pycache__/
+.DS_Store
+plots/
+*.pt
+*.npy
+*.log
+.vscode
