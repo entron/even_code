@@ -1,0 +1,11 @@
+PyYAML
+jupyter
+torch 
+torchvision
+scipy
+matplotlib
+scikit-learn
+scikit-image
+scikit-video
+pillow
+opencv-python
