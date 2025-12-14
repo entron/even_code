@@ -3,20 +3,33 @@
 <p align="center">
   <img src="2d_gaussian.png" alt="2D Gaussian visualization" height="220" />
   <img src="feature_maps_pca.png" alt="Feature maps PCA visualization" height="220" />
+  <img src="color.png" alt="Color image visualization" height="220" />
+  <img src="spiketrains3.png" alt="Spike trains visualization" height="220" />
 </p>
 
 This repository contains code to reproduce the main experiments from:
 
-> **Efficient Representation of Natural Image Patches**  
-> Cheng Guo – arXiv:2210.13004  
-> https://arxiv.org/abs/2210.13004
+> *Efficient Representation of Natural Image Patches*  
+> [https://arxiv.org/abs/2210.13004](https://arxiv.org/abs/2210.13004)
 
-Since 2011, I have been thinking about the following question in my spare time, mostly as an intellectual challenge and just for fun:
+Since 2011, I've been exploring the following question in my spare time—mostly as an intellectual challenge, and just for fun:
 
-> **If you were an engineer tasked with designing the visual system of an organism, what would you do?**
+> *If you were an engineer tasked with designing the visual system of an organism, what would you do?*
 
-This question is too big, so I worked one small step at a time and tried to see how far I could get. The current status of this decade-long journey is summarized in the note above.  
-This repo provides a minimal, runnable implementation of the core ideas.
+Why? Fundamentally because I want to understand how our brains process information—and because:
+
+> **“What I cannot create, I do not understand.”**  
+> — Richard Feynman
+
+There are too many intricacies in biological systems.
+One can easily get lost in the dendritic forests or stuck in the ion channels.
+So I kept asking: What are the fundamental goals of information processing? Are there principles that help us extract the essentials from the complexities?
+
+The question itself is too big. It’s tempting to simplify by making many assumptions.
+But what Poisson, Gauss, and Bayes can’t tell you is: while making a problem calculable, are you also making your model unrealistic?
+So I approached it by imagining a minimal system: first with just one input pixel, then two, and eventually small image patches—always trying to make as few assumptions as possible. I wanted to see how far I could get.
+
+A checkpoint in this decade-long, exciting, and sometimes lonely journey is summarized in the note above.
 
 
 ## Repository structure
